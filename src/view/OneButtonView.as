@@ -64,8 +64,14 @@ public class OneButtonView extends Sprite
         buttonText = assetManager.getAsset(buttonId+"TxtOrange.png");
         buttonClip.addChild(buttonBG);
         buttonClip.addChild(buttonText);
-        buttonClip.x = 350;
-        buttonClip.y = 400;
+        buttonBG.x = -buttonBG.width/2;
+        buttonBG.y = -buttonBG.height/2;
+        buttonText.x = -buttonText.width/2;
+        buttonText.y = -buttonText.height/2;
+        buttonClip.x = 440;
+        buttonClip.y = 450;
+        buttonClip.scaleX = 0.2;
+        buttonClip.scaleY = 0.2;
         addChild(buttonClip);
         buttonClip.addEventListener(MouseEvent.MOUSE_OVER, onButtonMouseOver);
         buttonClip.addEventListener(MouseEvent.MOUSE_OUT, onButtonMouseOut);
@@ -79,6 +85,10 @@ public class OneButtonView extends Sprite
 
         buttonBG = assetManager.getAsset("ButtonPurple.jpg");
         buttonText = assetManager.getAsset(buttonId+"TxtOrange.png");
+        buttonBG.x = -buttonBG.width/2;
+        buttonBG.y = -buttonBG.height/2;
+        buttonText.x = -buttonText.width/2;
+        buttonText.y = -buttonText.height/2;
 
         buttonClip.addChild(buttonBG);
         buttonClip.addChild(buttonText);
@@ -91,6 +101,10 @@ public class OneButtonView extends Sprite
 
         buttonBG = assetManager.getAsset("ButtonOrange.jpg");
         buttonText = assetManager.getAsset(buttonId+"TxtPurple.png");
+        buttonBG.x = -buttonBG.width/2;
+        buttonBG.y = -buttonBG.height/2;
+        buttonText.x = -buttonText.width/2;
+        buttonText.y = -buttonText.height/2;
 
         buttonClip.addChild(buttonBG);
         buttonClip.addChild(buttonText);
@@ -101,6 +115,13 @@ public class OneButtonView extends Sprite
     {
         destroy();
         onViewChangeRequest(viewId);
+    }
+
+    protected function animateButton():void{
+        if(buttonClip.scaleX < 1){
+            buttonClip.scaleX += 0.2;
+            buttonClip.scaleY += 0.2;
+        }
     }
 }
 }

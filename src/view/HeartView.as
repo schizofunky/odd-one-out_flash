@@ -2,6 +2,7 @@ package view
 {
 import flash.display.DisplayObject;
 import flash.display.Sprite;
+import flash.events.Event;
 
 public class HeartView extends Sprite
 {
@@ -22,7 +23,19 @@ public class HeartView extends Sprite
 
     public function loseLife() : void{
         if(heartAssets.length > 0){
-            removeChild(heartAssets.pop());
+            var asset : DisplayObject = heartAssets.pop();
+            asset.addEventListener(Event.ENTER_FRAME,onAssetFade);
+        }
+    }
+
+    private function onAssetFade(event:Event):void
+    {
+        if(event.currentTarget.alpha > 0.1){
+            event.currentTarget.alpha -= 0.1;
+        }
+        else{
+            event.currentTarget.removeEventListener(Event.ENTER_FRAME,onAssetFade);
+            removeChild(event.currentTarget as DisplayObject);
         }
     }
 }
