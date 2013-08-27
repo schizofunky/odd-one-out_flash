@@ -16,6 +16,8 @@ public class TimerView extends Sprite
         timeBar = new Shape();
         updateTimeBar(100);
         addChild(timeBar);
+        x = 50;
+        y = 20;
     }
 
     public function updateTimeBar(progress : Number):void{

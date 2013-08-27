@@ -1,5 +1,7 @@
 package view
 {
+import controller.SoundManager;
+
 import flash.display.DisplayObject;
 import flash.display.Shape;
 import flash.display.Sprite;
@@ -113,6 +115,7 @@ public class OneButtonView extends Sprite
 
     private function onButtonMouseDown(event:MouseEvent):void
     {
+        SoundManager.getInstance().playSfx("button-click.mp3");
         destroy();
         onViewChangeRequest(viewId);
     }

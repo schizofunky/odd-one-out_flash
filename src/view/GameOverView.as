@@ -1,5 +1,7 @@
 package view
 {
+import controller.SoundManager;
+
 import flash.display.DisplayObject;
 import flash.events.Event;
 
@@ -12,6 +14,7 @@ public class GameOverView extends OneButtonView
         super(onViewChangeCallback,"menu","MainMenu");
         addLogo();
         addScore();
+        SoundManager.getInstance().playSfx("gameover.mp3");
         addEventListener(Event.ENTER_FRAME,animateView);
     }
 

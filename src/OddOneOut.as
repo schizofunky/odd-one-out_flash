@@ -8,12 +8,14 @@ import view.AssetManager;
 import view.GameOverView;
 import view.GameView;
 import view.MainMenu;
+import view.MuteButton;
 
 [SWF(width=879,height=632)]
 public class OddOneOut extends Sprite {
     private var loadingBar:Shape;
     private var loadingText : TextField;
     private var currentView:Sprite;
+    private var muteButton:MuteButton;
     public function OddOneOut() {
         stage.frameRate = 25;
         loadAssets();
@@ -51,6 +53,7 @@ public class OddOneOut extends Sprite {
     private function onAssetsLoaded():void{
         //remove the loading screen and create the main menu
         removeLoadingBar();
+        muteButton = new MuteButton();
         changeView("menu");
     }
 
@@ -99,6 +102,7 @@ public class OddOneOut extends Sprite {
                 break;
         }
         addChild(currentView);
+        addChild(muteButton);
     }
 }
 }

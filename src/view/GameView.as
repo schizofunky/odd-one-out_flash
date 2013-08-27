@@ -1,6 +1,7 @@
 package view
 {
 import controller.DifficultyManager;
+import controller.SoundManager;
 
 import flash.display.DisplayObject;
 import flash.display.Shape;
@@ -37,9 +38,12 @@ public class GameView extends Sprite
         addHUD();
         createLevel();
         addEventListener(Event.ENTER_FRAME,update);
+        SoundManager.getInstance().playBgm("bgm.mp3");
     }
 
     public function destroy():void{
+
+        SoundManager.getInstance().stopBgm();
         removeChild(background);
         removeChild(frame);
         removeChild(scoreView);
@@ -154,7 +158,7 @@ public class GameView extends Sprite
 
     public function onCorrectClick(event : Event) : void{
         if(!gameOver){
-            //TODO: Play correct sfx
+            SoundManager.getInstance().playSfx("correct.mp3");
             updateScore();
             createLevel();
         }
@@ -162,7 +166,7 @@ public class GameView extends Sprite
 
     public function onWrongClick(event : Event) : void{
         if(!gameOver){
-            //TODO: Play wrong sfx
+            SoundManager.getInstance().playSfx("wrong.mp3");
             reduceLives();
             if(!gameOver){
                 createLevel();
