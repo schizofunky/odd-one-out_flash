@@ -15,6 +15,7 @@ public class OddOneOut extends Sprite {
     private var loadingText : TextField;
     private var currentView:Sprite;
     public function OddOneOut() {
+        stage.frameRate = 25;
         loadAssets();
     }
 

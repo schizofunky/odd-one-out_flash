@@ -1,6 +1,7 @@
 package view
 {
 import flash.display.DisplayObject;
+import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
 
@@ -14,6 +15,7 @@ public class OneButtonView extends Sprite
     protected var assetManager : AssetManager;
     private var viewId:String;
     private var buttonId:String;
+    private var background:Shape;
 
     public function OneButtonView(onViewChangeCallback : Function,viewToLoad : String, buttonText : String)
     {
@@ -21,6 +23,7 @@ public class OneButtonView extends Sprite
         buttonId = buttonText;
         assetManager = AssetManager.getInstance();
         onViewChangeRequest = onViewChangeCallback;
+        drawWhiteBG();
         addFrame();
         addButton();
     }
@@ -31,12 +34,22 @@ public class OneButtonView extends Sprite
         buttonClip.removeEventListener(MouseEvent.MOUSE_DOWN, onButtonMouseDown);
         removeChild(buttonClip);
         removeChild(frame);
+        removeChild(background);
         buttonClip.removeChild(buttonBG);
         buttonClip.removeChild(buttonText);
         buttonBG = null;
         buttonText = null;
         buttonClip = null;
         frame = null;
+        background = null;
+    }
+
+    private function drawWhiteBG():void{
+        background = new Shape();
+        background.graphics.beginFill(0xffffff);
+        background.graphics.drawRect(0,0,800,600);
+        background.graphics.endFill();
+        addChild(background);
     }
 
     private function addFrame():void{

@@ -3,6 +3,7 @@ package view
 import controller.DifficultyManager;
 
 import flash.display.DisplayObject;
+import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -24,6 +25,7 @@ public class GameView extends Sprite
     private var scoreView:ScoreView;
     private var timeView:TimerView;
     private var heartView:HeartView;
+    private var background:Shape;
 
     public function GameView(onViewChangeCallback : Function){
         assetManager = AssetManager.getInstance();
@@ -38,13 +40,20 @@ public class GameView extends Sprite
     }
 
     public function destroy():void{
+        removeChild(background);
         removeChild(frame);
         removeChild(scoreView);
         removeChild(timeView);
         removeChild(heartView);
+        background = null;
+        frame = null;
+        scoreView = null;
+        timeView = null;
+        heartView = null;
     }
 
     private function addHUD():void{
+        drawWhiteBG();
         frame = assetManager.getAsset("GameFrame.png");
         addChild(frame);
         scoreView = new ScoreView("0");
@@ -110,12 +119,15 @@ public class GameView extends Sprite
 	private function createImageObject(coordinates : Array, robotImage : DisplayObject,type : String):void{
         var robotSprite : Sprite = new Sprite();
         robotSprite.addChild(robotImage);
+        robotImage.x = -robotImage.width/2;
+        robotImage.y = -robotImage.height/2;
         imagesForLevel[imagesCreated] = robotSprite;
         robotSprite.x = coordinates[0];
         robotSprite.y = coordinates[1];
-
+        robotSprite.scaleX = 0.1;
+        robotSprite.scaleY = 0.1;
         if(difficultyController.canImagesRotate()){
-            robotSprite.rotationX = Math.random()*360;
+            robotSprite.rotationZ = Math.random()*360;
         }
         addChild(robotSprite);
         if(type == "Good"){
@@ -124,8 +136,21 @@ public class GameView extends Sprite
         else{
             robotSprite.addEventListener(MouseEvent.CLICK,onCorrectClick);
         }
+        robotSprite.addEventListener(Event.ENTER_FRAME,onScaleIn);
 		imagesCreated++;
 	}
+
+    private function onScaleIn(event:Event):void
+    {
+        if(event.currentTarget.scaleX < 1)
+        {
+            event.currentTarget.scaleX += 0.2;
+            event.currentTarget.scaleY += 0.2;
+        }
+        else{
+            event.currentTarget.removeEventListener(Event.ENTER_FRAME,onScaleIn);
+        }
+    }
 
     public function onCorrectClick(event : Event) : void{
         if(!gameOver){
@@ -157,6 +182,14 @@ public class GameView extends Sprite
         if(lives <= 0){
             gameOver = true;
         }
+    }
+
+    private function drawWhiteBG():void{
+        background = new Shape();
+        background.graphics.beginFill(0xffffff);
+        background.graphics.drawRect(0,0,800,600);
+        background.graphics.endFill();
+        addChild(background);
     }
 }
 }
